@@ -1,41 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { View,StyleSheet,Text,Dimensions, Button } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import Dash from "../components/dash";
 import COLORS from '../constants/Colors'
 import Dimens from "../constants/dimens";
+import Circle from "../components/Circle";
+import { Slider } from 'react-native-elements';
+import ScaleMeter from "../components/ScaleMeter";
 
 const windowWidth = Dimensions.get('window').width;
 const cirleHolderW=40,circleOuterW=80,middleCircleW=140, innerCircleW=220;
 
 const ScaleMeterOneScreen=props=>{
 
-
+     const [sliderValue, setSliderValue] = useState(5);
+     
 
     return(
         <View style={styles.container}>
-            <Dash counter={5} position={0} />
-            <View style={styles.hederTextContainer}>
-                <Text style={styles.headerFont}>RESCUE SESSION: Anger {'&'} Frustation </Text>
-                <Ionicons name='close-outline' size={25} color={COLORS.whiteColor} />
-            </View>
-            <View style={styles.hederTextContainer}>
-                <Text style={styles.headerFontLarge}>Pick the level your anger {'&'} frustation right now </Text>
-            </View>
+            <ScaleMeter></ScaleMeter>
             <View style={styles.widgetContainer}>
                 <View style={styles.outerCircleHolder}>
-                    <View style={styles.outerCircle}>
+                    <Circle borderStyle={'dashed'} bColor={COLORS.dividerColor} bgColor={'none'} radius={(windowWidth-80)/2}>
                         <View style={styles.semiCircle}></View>
-                        <View style={styles.middleCircle}>
-                            <View style={styles.innerCircle}>
-                                    <Text style={styles.nuberText} >5</Text>
-                                </View>
-                            </View>
-                        </View>
+                        <Circle  borderStyle={'solid'} bColor={COLORS.infoColor} bgColor={COLORS.infoColor} radius={(windowWidth-140)/2}>
+                            <Circle  borderStyle={'solid'} bColor={COLORS.accentColor} bgColor={COLORS.accentColor} radius={(windowWidth-220)/2}>
+                                <Text style={styles.nuberText} >{sliderValue}</Text>
+                            </Circle>
+                        </Circle>
+                    </Circle>
                 </View>
             </View>
             <View style={styles.sliderHolder}>
-                <Button style={styles.button} title="Next" />
+            <Slider
+                value={sliderValue}
+                onValueChange={(value) => setSliderValue(value)}
+                maximumValue={10}
+                minimumValue={0}
+                step={1}
+                trackStyle={{ height: 10, thumbTintColor: COLORS.accentColor }}
+                thumbStyle={{ height: 20, width: 20, backgroundColor: COLORS.accentColor }}
+                />
             </View>
             <View style={styles.buttonHolder}>
                 <Button style={styles.button} title="Next" />
@@ -97,7 +100,6 @@ const styles = StyleSheet.create({
     },
     semiCircle:{
         position:'absolute',
-        
         marginLeft:(windowWidth-middleCircleW+5)/2,
         height: windowWidth-middleCircleW+5,
         width: (windowWidth-middleCircleW+5)/2,
@@ -108,38 +110,24 @@ const styles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center'
     },
-    middleCircle:{
 
-        height: windowWidth-middleCircleW,
-        width: windowWidth-middleCircleW,
-        borderRadius: (windowWidth-middleCircleW)/2,
-        borderColor:COLORS.infoColor,
-        backgroundColor:COLORS.infoColor,
-        alignItems:'center',
-        justifyContent:'center'
-    },
-    innerCircle:{
-
-        height: windowWidth-innerCircleW,
-        width: windowWidth-innerCircleW,
-        borderRadius: (windowWidth-innerCircleW)/2,
-        borderColor:COLORS.accentColor,
-        backgroundColor:COLORS.accentColor,
-        alignItems:'center',
-        justifyContent:'center'
-    },
     nuberText:{
         fontSize:Dimens.xxxlarge,
         color:COLORS.whiteColor,
         fontWeight:'600'
     },
     sliderHolder:{
-        marginHorizontal:20,
+        marginHorizontal:40,
         marginVertical:20,
+        
     },
     buttonHolder:{
         marginHorizontal:20,
         marginVertical:20,
+    },
+    button:{
+        color:COLORS.infoColor,
+        borderRadius:5,
     }
 
   });

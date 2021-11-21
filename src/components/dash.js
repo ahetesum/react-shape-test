@@ -8,7 +8,7 @@ const Dash=props=>{
 
 	for(let i = 0; i < props.counter; i++){
         itemsDash.push(      
-                <View style={(props.position==i)?styles.itemContainer:styles.itemContainerSelected}></View>
+                <View key={i}  style={(props.position==i)?styles.itemContainer:styles.itemContainerSelected}></View>
                 )
     }
 
