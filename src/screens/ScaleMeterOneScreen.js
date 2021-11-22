@@ -5,6 +5,7 @@ import Dimens from "../constants/dimens";
 import Circle from "../components/Circle";
 import { Slider } from 'react-native-elements';
 import ScaleMeter from "../components/ScaleMeter";
+import NextButton from "../components/NextButton";
 
 const windowWidth = Dimensions.get('window').width;
 const cirleHolderW=40,circleOuterW=80,middleCircleW=140, innerCircleW=220;
@@ -12,7 +13,10 @@ const cirleHolderW=40,circleOuterW=80,middleCircleW=140, innerCircleW=220;
 const ScaleMeterOneScreen=props=>{
 
      const [sliderValue, setSliderValue] = useState(5);
-     
+    
+     const onNextPress=()=>{
+        props.navigation.navigate('second');
+     }
 
     return(
         <View style={styles.container}>
@@ -36,12 +40,14 @@ const ScaleMeterOneScreen=props=>{
                 maximumValue={10}
                 minimumValue={0}
                 step={1}
+                maximumTrackTintColor={COLORS.whiteColor}  
+                minimumTrackTintColor={COLORS.accentColor} 
                 trackStyle={{ height: 10, thumbTintColor: COLORS.accentColor }}
                 thumbStyle={{ height: 20, width: 20, backgroundColor: COLORS.accentColor }}
                 />
             </View>
             <View style={styles.buttonHolder}>
-                <Button style={styles.button} title="Next" />
+                <NextButton title={'Next'} customStyle={styles.button} onNextPress={onNextPress} />
             </View>
         </View>
     );
@@ -126,9 +132,12 @@ const styles = StyleSheet.create({
         marginVertical:20,
     },
     button:{
-        color:COLORS.infoColor,
-        borderRadius:5,
+        color:COLORS.whiteColor,
+        backgroundColor:COLORS.accentColor,
+        height:40,width:'100%',
+        
     }
+
 
   });
 
